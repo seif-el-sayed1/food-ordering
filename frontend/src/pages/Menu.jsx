@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react'
-import axios from "axios"
+import React, { useState } from 'react'
+import { useContext } from "react"  
+import { FoodContext } from '../../context/foodContext'
 import burgerPic from "../assets/burger.jpg"
 import pizzaPic from "../assets/pizza.jpg"
 import pastaPic from "../assets/pasta.jpg"
@@ -11,34 +12,8 @@ import add from "../assets/add_icon_green.png"
 import remove from "../assets/remove_icon_red.png"
 
 export const Menu = () => {
+    const {fetchData, dish, byCategory} = useContext(FoodContext)
     const [cat, setCat] = useState("All")
-    const [dish, setDish] = useState([])
-    let category = ""
-
-    const fetchData = async () => {
-        try {
-            const { data } = await axios.get("http://localhost:3000/food/get-food");
-            if (data.success) {
-                setDish(data.food);
-            }
-        } catch (error) {
-            console.log(error.message);
-        }
-    };
-    useEffect(() => {
-        fetchData();
-    }, []);
-    
-    const byCategory = async () => {
-        try {
-            const { data } = await axios.get(`http://localhost:3000/food/get-food/${category}`);
-            if (data.success) {
-                setDish(data.category);
-            }
-        } catch (error) {
-            console.log(error.message);
-        }
-    } 
 
     return (
         <>
@@ -49,31 +24,31 @@ export const Menu = () => {
                         <img className='rounded-full w-30 h-27 cursor-pointer' src={allFood} alt="All" />
                         <p className='text-blue-950 text-center pt-3 '>All Menu</p>
                     </div>
-                    <div onClick={() => {setCat("Burger");category = "Burger";byCategory()}} className={cat == "Burger" ? "category" : undefined}>
+                    <div onClick={() => {setCat("Burger");byCategory("Burger");console.log(cat)}} className={cat == "Burger" ? "category" : undefined}>
                         <img className='rounded-full w-30 h-27 cursor-pointer' src={burgerPic} alt="Burger" />
                         <p className='text-blue-950 text-center pt-3 '>Burger</p>
                     </div>
-                    <div onClick={() => {setCat("Pizza"); category = "Pizza"; byCategory()}} 
+                    <div onClick={() => {setCat("Pizza");  byCategory("Pizza");console.log(cat)}} 
                         className={cat == "Pizza" ? "category" : undefined}>
                         <img className='rounded-full w-30 h-27 cursor-pointer' src={pizzaPic} alt="Pizza" />
                         <p className='text-blue-950 text-center pt-3 '>Pizza</p>
                     </div>
-                    <div onClick={() => {setCat("Chicken"); category = "Fried Chicken"; byCategory()}} 
+                    <div onClick={() => {setCat("Chicken");byCategory("Fried Chicken");console.log(cat)}} 
                         className={cat == "Chicken" ? "category" : undefined}>
                         <img className='rounded-full w-30 h-27 cursor-pointer' src={friedChickenPic} alt="FriedChicken" />
                         <p className='text-blue-950 text-center pt-3 '>Fried Chicken</p>
                     </div>
-                    <div onClick={() => {setCat("Pasta"); category = "Pasta"; byCategory()}} 
+                    <div onClick={() => {setCat("Pasta");  byCategory("Pasta");console.log(cat)}} 
                         className={cat == "Pasta" ? "category" : undefined}>
                         <img className='rounded-full w-30 h-27 cursor-pointer' src={pastaPic} alt="Pasta" />
                         <p className='text-blue-950 text-center pt-3 '>Pasta</p>
                     </div>
-                    <div onClick={() => {setCat("Salad"); category = "Salad"; byCategory()}} 
+                    <div onClick={() => {setCat("Salad");  byCategory("Salad")}} 
                         className={cat == "Salad" ? "category" : undefined}>
                         <img className='rounded-full w-30 h-27 cursor-pointer' src={saladPic} alt="Salad" />
                         <p className='text-blue-950 text-center pt-3 '>Salad</p>
                     </div>
-                    <div onClick={() => {setCat("Drinks"); category = "Drinks"; byCategory()}} 
+                    <div onClick={() => {setCat("Drinks");  byCategory("Drinks")}} 
                         className={cat == "Drinks" ? "category" : undefined}>
                         <img className='rounded-full w-30 h-27 cursor-pointer' src={drinksPic} alt="Drinks" />
                         <p className='text-blue-950 text-center pt-3'>Drinks</p>
