@@ -133,7 +133,6 @@ const userData = async (req, res) => {
         if(!user) {
             return res.json({Success: false, message: "User not found"})
         }
-    
         return res.json({Success: true, userData: user})
         
         
