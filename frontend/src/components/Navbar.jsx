@@ -1,9 +1,15 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import Logo from "../assets/logo.png"
 import Search_icon from "../assets/search_icon.png"
 import Basket_icon from "../assets/basket_icon.png"
+import { useNavigate } from 'react-router-dom'
+import { UserContext } from "../context/userContext";
+
 
 export const Navbar = () => {
+    const navigate = useNavigate()
+        // const{setIsLoggedin, userData, setUserData} = useContext(UserContext)
+    
     return (
         <div className='flex justify-between mx-20 '>
             <img className='w-20' src={Logo} alt="LOGO" />
@@ -16,8 +22,9 @@ export const Navbar = () => {
             <div className='flex items-center justify-between gap-10'>
                 <img className='w-6 cursor-pointer' src={Search_icon} alt="Search" />
                 <img className='w-6 cursor-pointer' src={Basket_icon} alt="Basket" />
-                <button className='border  border-blue-950 hover:bg-blue-950 hover:text-white cursor-pointer 
-                                    transition rounded-2xl px-5 text-sm py-1'>Sign in</button>
+                <button onClick={() => navigate("/getStarted")} className='border border-blue-950 hover:bg-blue-950 hover:text-white cursor-pointer 
+                    transition rounded-2xl px-5 text-sm py-1'>Sign Up</button>
+                
             </div>
         </div>
     )

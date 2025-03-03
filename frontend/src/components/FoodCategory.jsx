@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useContext } from "react"  
-import { StoreContext } from '../../context/StoreContext'
+import { StoreContext } from '../context/StoreContext'
 import burgerPic from "../assets/burger.jpg"
 import pizzaPic from "../assets/pizza.jpg"
 import pastaPic from "../assets/pasta.jpg"
