@@ -25,7 +25,7 @@ export const UserContextProvider = (props) => {
     }
     
     const getUserData = async () => {
-        const {data} = await axios.get(backendUrl + "user")
+        const {data} = await axios.get(backendUrl + "user/getUser")
         if(data.Success) {
             setUserData(data.userData)
         } else {
