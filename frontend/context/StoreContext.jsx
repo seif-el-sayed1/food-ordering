@@ -1,12 +1,12 @@
 import { createContext, useState, useEffect } from "react"
 import axios from "axios"
 
-export const FoodContext = createContext();
+export const StoreContext = createContext();
 
-export const FoodContextProvider = (props) => {
+export const StoreContextProvider = (props) => {
     const backendUrl = import.meta.env.VITE_BACKEND_URL; 
     const [dish, setDish] = useState([])
-
+    
     
     const fetchData = async () => {
         try {
@@ -40,8 +40,8 @@ export const FoodContextProvider = (props) => {
     }, []);
 
     return (
-        <FoodContext.Provider value={value}>
+        <StoreContext.Provider value={value}>
             {props.children}
-        </FoodContext.Provider>
+        </StoreContext.Provider>
     )
 }

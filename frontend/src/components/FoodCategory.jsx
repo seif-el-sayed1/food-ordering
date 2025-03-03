@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useContext } from "react"  
-import { FoodContext } from '../../context/foodContext'
+import { StoreContext } from '../../context/StoreContext'
 import burgerPic from "../assets/burger.jpg"
 import pizzaPic from "../assets/pizza.jpg"
 import pastaPic from "../assets/pasta.jpg"
@@ -11,7 +11,7 @@ import allFood from "../assets/allFood.jpg"
 
 export const FoodCategory = () => {
     const [cat, setCat] = useState("All")
-    const {fetchData, byCategory} = useContext(FoodContext)
+    const {fetchData, byCategory} = useContext(StoreContext)
     
     return (
         <div className="mx-20 border-b-2 border-blue-950 py-5">

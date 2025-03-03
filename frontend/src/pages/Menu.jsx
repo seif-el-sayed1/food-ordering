@@ -1,12 +1,12 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useContext } from "react"  
-import { FoodContext } from '../../context/foodContext'
+import { StoreContext } from '../../context/StoreContext'
 import { FoodCategory } from '../components/foodCategory'
 import add from "../assets/add_icon_green.png"
 import remove from "../assets/remove_icon_red.png"
 
 export const Menu = () => {
-    const {dish} = useContext(FoodContext)
+    const {dish} = useContext(StoreContext)
     return (
         <>
             <FoodCategory />
@@ -19,7 +19,7 @@ export const Menu = () => {
                                 <div className='flex justify-between items-center m-3'>
                                     <h2 className='font-bold text-blue-950'>{ele.title}</h2>
                                     <div className='flex items-center gap-3'>
-                                        <img className='w-6 cursor-pointer' src={add} alt="add"/>
+                                        <img onClick={() => console.log(ele)} className='w-6 cursor-pointer' src={add} alt="add"/>
                                         <span>5</span>
                                         <img className='w-6 cursor-pointer' src={remove} alt="remove" />
                                     </div>
