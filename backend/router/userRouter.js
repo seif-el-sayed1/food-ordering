@@ -4,9 +4,9 @@ const userController = require('../controllers/userConroller')
 const verifyToken = require("../middlewares/verifyToken")
 
 
-router.route('/register').post(verifyToken,userController.register)
+router.route('/register').post(userController.register)
 
-router.route('/login').post(verifyToken, userController.login)
+router.route('/login').post(userController.login)
 
 router.route('/logout').post(userController.logout)
 

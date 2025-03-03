@@ -14,7 +14,7 @@ const allowedOrigins = ["http://localhost:5173"]
 app.use(cors({
     origin: allowedOrigins,
     credentials: true
-}))
+})) 
 app.use(cookieParser())
 
 app.use("/user", userRouter)
