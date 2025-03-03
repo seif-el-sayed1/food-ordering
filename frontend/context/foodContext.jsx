@@ -25,7 +25,7 @@ export const FoodContextProvider = (props) => {
                     setDish(data.category);
                 }
             } catch (error) {
-                console.log(error.message);
+                console.log(error.message); 
             }
         } 
     const value = {
