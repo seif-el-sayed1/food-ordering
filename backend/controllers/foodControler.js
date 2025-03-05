@@ -60,7 +60,7 @@ const addToCart = async (req, res) => {
             });
             await newCartItem.save();
         }
-        return res.json({success: true, massage: "Done"})
+        return res.json({success: true, massage: "Add to cart Successfully"})
     } catch (error) {
         return res.status(500).json({ success: false, message: error.message });
     }
