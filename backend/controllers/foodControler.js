@@ -40,11 +40,15 @@ const addToCart = async (req, res) => {
     try {
         const productCart = await cartModel.findOne({ userId: req.user.id, productId }); 
         const product = await foodModel.findById(productId);
-
+                
         if (productCart) {
             product.count++;
             await product.save()
+            productCart.count = product.count;
+            await productCart.save();
         } else {
+            product.count++;
+            await product.save()
             const newCartItem = new cartModel({
                 userId: req.user.id,
                 productId,
@@ -55,8 +59,8 @@ const addToCart = async (req, res) => {
                 count: product.count
             });
             await newCartItem.save();
-            return res.json(newCartItem)
         }
+        return res.json({success: true, massage: "Done"})
     } catch (error) {
         return res.status(500).json({ success: false, message: error.message });
     }
