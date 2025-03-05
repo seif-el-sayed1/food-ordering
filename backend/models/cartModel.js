@@ -1,6 +1,14 @@
 const mongoose = require('mongoose');
 
-const foodSchema = new mongoose.Schema({
+const cartSchema = new mongoose.Schema({
+    userId: {
+        type: String,
+        require: true
+    },
+    productId: {
+        type: String,
+        require: true
+    },
     image: {
         type: String,
         require: true
@@ -17,14 +25,10 @@ const foodSchema = new mongoose.Schema({
         type: String,
         require: true
     },
-    category: {
-        type: String,
-        require: true
-    },
-    count: {
+    count : {
         type: Number,
-        default: 0
+        default: 1
     }
 })
 
-module.exports = mongoose.model('food', foodSchema)
+module.exports = mongoose.model('carts', cartSchema)

@@ -3,7 +3,8 @@ const router = express.Router()
 const multer  = require('multer'); 
 
 const setFileUrl = require("../middlewares/setFileUrl")
-const foodController = require("../controllers/foodControler")
+const foodController = require("../controllers/foodControler");
+const verifyToken = require("../middlewares/verifyToken");
 
 const diskStorage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -28,11 +29,12 @@ const upload = multer({
     storage: diskStorage,
     fileFilter
 })
-
+// food (admin)
 router.route("/add-food").post(upload.single("image"), setFileUrl, foodController.addFood)
-
 router.route("/get-food").get(foodController.getFood)
 router.route("/get-food/:category").get(foodController.getFoodByCAtegory)
+// Cart
+router.route("/add-to-cart").post(verifyToken, foodController.addToCart)
 
 
 module.exports = router

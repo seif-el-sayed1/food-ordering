@@ -19,6 +19,7 @@ app.use(cookieParser())
 
 app.use("/user", userRouter)
 app.use("/food", foodRouter)
+app.use("/cart", foodRouter)
 
 
 mongoose.connect(process.env.MONGO_URL).then(() => {

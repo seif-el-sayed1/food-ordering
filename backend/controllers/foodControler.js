@@ -1,3 +1,4 @@
+const cartModel = require("../models/cartModel")
 const foodModel = require("../models/foodModel")
 
 const addFood = async (req, res) => {
@@ -33,8 +34,37 @@ const getFoodByCAtegory = async (req, res) => {
         return res.json({success: false, message: error.message})
     }
 }
+const addToCart = async (req, res) => {
+    const { productId } = req.body;
+    
+    try {
+        const productCart = await cartModel.findOne({ userId: req.user.id, productId }); 
+        const product = await foodModel.findById(productId);
+
+        if (productCart) {
+            product.count++;
+            await product.save()
+        } else {
+            const newCartItem = new cartModel({
+                userId: req.user.id,
+                productId,
+                image: product.image,
+                title: product.title,
+                price: product.price,
+                description: product.description,
+                count: product.count
+            });
+            await newCartItem.save();
+            return res.json(newCartItem)
+        }
+    } catch (error) {
+        return res.status(500).json({ success: false, message: error.message });
+    }
+};
+
 module.exports = {
     addFood,
     getFood,
-    getFoodByCAtegory
+    getFoodByCAtegory,
+    addToCart
 }
