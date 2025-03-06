@@ -68,8 +68,20 @@ export const StoreContextProvider = (props) => {
         );
         setDish(updatedDish);
     };
+    const [cart, setCart] = useState([])
+    const getCartData = async () => {
+        try {
+            const { data } = await axios.get(backendUrl + "food/cart", { withCredentials: true });
+            if (data.success) {
+                setCart(data.cart); 
+            }
+        } catch (error) {
+            console.log(error.message);
+        }
+    };
     
     const value = {
+        backendUrl,
         fetchData,
         byCategory,
         dish,
@@ -77,7 +89,9 @@ export const StoreContextProvider = (props) => {
         addToCart,
         removeFromCart,
         handleIncrease,
-        handleDecrease
+        handleDecrease,
+        getCartData,
+        cart
     }
 
     useEffect(() => {

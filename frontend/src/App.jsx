@@ -4,6 +4,7 @@ import { Navbar } from "./components/Navbar"
 import { Routes, Route } from "react-router-dom";
 import {ToastContainer} from "react-toastify"
 import { GetStarted } from "./pages/GetStarted";
+import { Cart } from "./pages/Cart";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           </>
         } path="/" />
         <Route path="/getStarted" element={<GetStarted />}/>
+        <Route path="/cart" element={<Cart />}/>
       </Routes>
     </>
   )
