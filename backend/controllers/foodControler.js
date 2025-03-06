@@ -69,12 +69,10 @@ const removeFromCart = async (req, res) => {
     try {
         const productCart = await cartModel.findOne({ userId: req.user.id, productId }); 
         const product = await foodModel.findById(productId);
-        if (product.count <= 0) {
-            product.count--;
-            await product.save()
-            productCart.count = product.count;
-            await productCart.save();
-        }
+        product.count = Math.max(0, product.count - 1);
+        await product.save()
+        productCart.count = product.count;
+        await productCart.save();
 
         return res.json({success: true, massage: "remove from cart Successfully"})
     } catch(error) {
