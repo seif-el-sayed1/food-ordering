@@ -33,42 +33,51 @@ export const StoreContextProvider = (props) => {
     } 
 
     // Cart Data
-    const [ele, setEle] = useState({});
-    const [count, setCount] = useState(0)
-
     const addToCart = async (productId) => {
-        axios.defaults.withCredentials = true
-        const {data} =  await axios.post(backendUrl + "food/add-to-cart", {productId})
-        console.log(data)
-        if (!data.success) {
-            navigate("/getStarted")
+        try {
+            const {data} =  await axios.post(backendUrl + "food/add-to-cart", {productId})
+            console.log(data)
+            if (!data.success) {
+                navigate("/getStarted")
+            }
+        } catch (error) {
+            console.log(error.message);
         }
+        axios.defaults.withCredentials = true
     }
     const handleIncrease = (product) => {
-        dish.map((ele) => {
-            ele._id == product._id && setCount(ele.count++) 
-        })
-    };
-    const handleDecrees = (product) => {
-        if (ele.count <= 0) {
-            dish.map((ele) => {
-                ele._id == product._id && setCount(ele.count--) 
-            })
+        const updatedDish = dish.map((ele) => 
+            ele._id === product._id ? { ...ele, count: ele.count + 1 } : ele
+        );
+        setDish(updatedDish); 
+        };
+    const removeFromCart = async (productId) => {
+        try {
+            axios.defaults.withCredentials = true
+            const {data} =  await axios.post(backendUrl + "food/remove-from-cart", {productId})
+            if (!data.success) {
+                navigate("/getStarted")
+            }
+        } catch (error) {
+            console.log(error.message);
         }
+    }
+    const handleDecrease = (product) => {
+        const updatedDish = dish.map((ele) => 
+            ele._id === product._id ? { ...ele, count: Math.max(0, ele.count - 1) } : ele
+        );
+        setDish(updatedDish);
     };
-
-
+    
     const value = {
         fetchData,
         byCategory,
         dish,
         setDish,
         addToCart,
-        ele,
-        setEle,
-        count,
+        removeFromCart,
         handleIncrease,
-        handleDecrees
+        handleDecrease
     }
 
     useEffect(() => {

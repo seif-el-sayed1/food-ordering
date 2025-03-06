@@ -36,7 +36,6 @@ const getFoodByCAtegory = async (req, res) => {
 }
 const addToCart = async (req, res) => {
     const { productId } = req.body;
-    
     try {
         const productCart = await cartModel.findOne({ userId: req.user.id, productId }); 
         const product = await foodModel.findById(productId);
@@ -62,13 +61,32 @@ const addToCart = async (req, res) => {
         }
         return res.json({success: true, massage: "Add to cart Successfully"})
     } catch (error) {
-        return res.status(500).json({ success: false, message: error.message });
+        return res.json({ success: false, message: error.message });
     }
 };
+const removeFromCart = async (req, res) => {
+    const { productId } = req.body;
+    try {
+        const productCart = await cartModel.findOne({ userId: req.user.id, productId }); 
+        const product = await foodModel.findById(productId);
+        if (product.count <= 0) {
+            product.count--;
+            await product.save()
+            productCart.count = product.count;
+            await productCart.save();
+        }
+
+        return res.json({success: true, massage: "remove from cart Successfully"})
+    } catch(error) {
+        return res.json({ success: false, message: error.message });
+    }
+    
+}
 
 module.exports = {
     addFood,
     getFood,
     getFoodByCAtegory,
-    addToCart
+    addToCart,
+    removeFromCart
 }

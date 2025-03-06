@@ -1,4 +1,4 @@
-import React, { use, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useContext } from "react"  
 import { StoreContext } from "../context/StoreContext"
 import { FoodCategory } from '../components/foodCategory'
@@ -6,19 +6,8 @@ import add from "../assets/add_icon_green.png"
 import remove from "../assets/remove_icon_red.png"
 
 export const Menu = () => {
-    const {dish, addToCart, handleIncrease, handleDecrees, ele, setEle, count} = useContext(StoreContext)
-    useEffect(() => {
-        handleIncrease(ele)
-    },[count])
-
-    useEffect(() => {
-        handleDecrees(ele)
-    },[count])
+    const {dish, addToCart, removeFromCart ,handleIncrease, handleDecrease} = useContext(StoreContext)
     
-
-    
-
-
     return (
         <>
             <FoodCategory />
@@ -31,9 +20,9 @@ export const Menu = () => {
                                 <div className='flex justify-between items-center m-3'>
                                     <h2 className='font-bold text-blue-950'>{ele.title}</h2>
                                     <div className='flex items-center gap-3'>
-                                        <img onClick={() =>{ addToCart(ele._id), setEle(ele.count) ,handleIncrease(ele)}} className='w-6 cursor-pointer' src={add} alt="add"/>
-                                        <span>{ele.count}</span>
-                                        <img onClick={() =>{ addToCart(ele._id), setEle(ele.count) ,handleDecrees(ele)}} className='w-6 cursor-pointer' src={remove} alt="remove" />
+                                        <img onClick={() =>{ addToCart(ele._id), handleIncrease(ele)}} className='w-6 cursor-pointer' src={add} alt="add"/>
+                                        <span>{ele.count}</span >
+                                        <img onClick={() =>{ removeFromCart(ele._id), handleDecrease(ele)}} className='w-6 cursor-pointer' src={remove} alt="remove" />
                                     </div>
                                 </div>
                                 <p className='text-gray-500 m-3'>{ele.description}</p>
