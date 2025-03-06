@@ -78,7 +78,14 @@ const removeFromCart = async (req, res) => {
     } catch(error) {
         return res.json({ success: false, message: error.message });
     }
-    
+}
+const getCartData = async (req,res) => {
+    try {
+        const cart = await cartModel.find({userId: req.user.id})
+        return res.json({success: true, cart})
+    } catch (error) {
+        return res.json({ success: false, message: error.message });
+    }
 }
 
 module.exports = {
@@ -86,5 +93,6 @@ module.exports = {
     getFood,
     getFoodByCAtegory,
     addToCart,
-    removeFromCart
+    removeFromCart,
+    getCartData
 }
