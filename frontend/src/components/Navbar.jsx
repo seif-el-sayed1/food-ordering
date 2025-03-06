@@ -10,7 +10,7 @@ import axios  from 'axios'
 
 export const Navbar = () => {
     const navigate = useNavigate()
-        const{setIsLoggedin, userData, setUserData, backendUrl} = useContext(UserContext)
+    const{setIsLoggedin, userData, setUserData, backendUrl} = useContext(UserContext)
 
         const logout = async () => {
             try {
@@ -20,7 +20,7 @@ export const Navbar = () => {
                     toast.success(data.message,{position: "top-center"})
                     setUserData(false)
                     setIsLoggedin(false)
-                    navigate("/")
+                    navigate("/getStarted")
                 }
             } catch (error) {
                 toast.error(error.message,{position: "top-center"})
