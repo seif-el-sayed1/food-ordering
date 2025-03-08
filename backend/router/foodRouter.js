@@ -37,6 +37,7 @@ router.route("/get-food/:category").get(foodController.getFoodByCAtegory)
 router.route("/add-to-cart").post(verifyToken, foodController.addToCart)
 router.route("/remove-from-cart").post(verifyToken, foodController.removeFromCart)
 router.route("/cart").get(verifyToken, foodController.getCartData)
+router.route("/delete-from-cart").post(verifyToken, foodController.deleteFromCart)
 
 
 module.exports = router

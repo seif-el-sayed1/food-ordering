@@ -87,6 +87,16 @@ const getCartData = async (req,res) => {
         return res.json({ success: false, message: error.message });
     }
 }
+const deleteFromCart = async(req, res) => {
+    try {
+        const {productId} = req.body
+        await cartModel.deleteOne({_id: productId, userId: req.user.id})
+        
+        return res.json({ success: true, message: "Product removed from cart successfully" });
+    } catch (error) {
+        return res.json({success:false, message: error.message})
+    }    
+}
 
 module.exports = {
     addFood,
@@ -94,5 +104,6 @@ module.exports = {
     getFoodByCAtegory,
     addToCart,
     removeFromCart,
-    getCartData
+    getCartData,
+    deleteFromCart
 }

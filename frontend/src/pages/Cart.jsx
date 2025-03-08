@@ -1,13 +1,18 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import emptyCart from "../assets/emptyCart.png"
 import { StoreContext } from '../context/StoreContext'
 import { Navbar}  from "../components/Navbar"
 import crossIcon from "../assets/cross_icon.png"
+import { useNavigate } from 'react-router-dom'
 
 export const Cart = () => {
-    const { cart } = useContext(StoreContext)
-
+    const { cart, getCartData, deleteFromCart } = useContext(StoreContext)
+    const navigate = useNavigate()
     const total = cart.reduce((acc, curr) => acc + curr.price * curr.count, 0);
+
+    useEffect(() => {
+        getCartData()
+    },[])
 
     return (
         <div>
@@ -33,7 +38,9 @@ export const Cart = () => {
                                         <td className='p-3'>{ele.price} $</td>
                                         <td className='p-3'>{ele.count}</td>
                                         <td className='p-3'>{ele.price * ele.count} $</td>
-                                        <td className='p-3'><img className='w-3 cursor-pointer' src={crossIcon} alt="DELETE"/></td>
+                                        <td className='p-3'><img className='w-3 cursor-pointer' 
+                                                                    onClick={() => deleteFromCart(ele._id)} 
+                                                                    src={crossIcon} alt="DELETE"/></td>
                                     </tr>
                                 )
                             })}
@@ -45,7 +52,7 @@ export const Cart = () => {
                         <div className='flex justify-center mb-2'>
                             <img className='w-70' src={emptyCart} alt="EMPTY CART" />
                         </div>
-                        <button className='cursor-pointer bg-orange-600 w-50 
+                        <button onClick={() => navigate("/")} className='cursor-pointer bg-orange-600 w-50 
                                             rounded-md text-white hover:rounded-none duration-300 hover:py-1' >
                             Shop Now
                         </button>
@@ -64,7 +71,7 @@ export const Cart = () => {
                     </div>
                     <div className='flex justify-between border-b-2 border-b-gray-300 py-2'>
                         <p>Total:</p>
-                        <span className='text-blue-950 font-bold'>{total + total * 0.02}</span>
+                        <span className='text-blue-950 font-bold'>{total + total * 0.02} $</span>
                     </div>
                     <button className='bg-blue-950 w-50 h-7 text-white rounded-md 
                                         cursor-pointer my-3 hover:w-60 duration-300'>

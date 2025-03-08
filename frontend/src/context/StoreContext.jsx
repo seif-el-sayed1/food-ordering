@@ -36,7 +36,6 @@ export const StoreContextProvider = (props) => {
     const addToCart = async (productId) => {
         try {
             const {data} =  await axios.post(backendUrl + "food/add-to-cart", {productId})
-            console.log(data)
             if (!data.success) {
                 navigate("/getStarted")
             }
@@ -55,9 +54,7 @@ export const StoreContextProvider = (props) => {
         try {
             axios.defaults.withCredentials = true
             const {data} =  await axios.post(backendUrl + "food/remove-from-cart", {productId})
-            if (!data.success) {
-                navigate("/getStarted")
-            }
+            
         } catch (error) {
             console.log(error.message);
         }
@@ -79,7 +76,17 @@ export const StoreContextProvider = (props) => {
             console.log(error.message);
         }
     };
-    
+    const deleteFromCart = async(productId) => {
+        try {
+            const {data} =  await axios.post(backendUrl + "food/delete-from-cart", {productId})
+            if (data.success) {
+                getCartData()
+            }
+        } catch (error) {
+            console.log(error.message);
+        }
+    }
+
     const value = {
         backendUrl,
         fetchData,
@@ -91,12 +98,12 @@ export const StoreContextProvider = (props) => {
         handleIncrease,
         handleDecrease,
         getCartData,
-        cart
+        cart,
+        deleteFromCart
     }
 
     useEffect(() => {
         fetchData();
-        getCartData()
     }, []);
 
     return (
