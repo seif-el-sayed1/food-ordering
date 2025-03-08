@@ -96,6 +96,7 @@ export const StoreContextProvider = (props) => {
 
     useEffect(() => {
         fetchData();
+        getCartData()
     }, []);
 
     return (
