@@ -1,4 +1,5 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
+import emptyCart from "../assets/emptyCart.png"
 import { StoreContext } from '../context/StoreContext'
 import { Navbar}  from "../components/Navbar"
 import crossIcon from "../assets/cross_icon.png"
@@ -40,7 +41,15 @@ export const Cart = () => {
                     </table>
                     
                 ) : (
-                    <p>EMPTY CART</p>
+                    <div className='text-center'>
+                        <div className='flex justify-center mb-2'>
+                            <img className='w-70' src={emptyCart} alt="EMPTY CART" />
+                        </div>
+                        <button className='cursor-pointer bg-orange-600 w-50 
+                                            rounded-md text-white hover:rounded-none duration-300 hover:py-1' >
+                            Shop Now
+                        </button>
+                    </div>
                 )
                 }
                 <div className='mt-10 w-100 shadow-2xl p-3 rounded-2xl '>
@@ -51,14 +60,14 @@ export const Cart = () => {
                     </div>
                     <div className='flex justify-between border-b-2 border-b-gray-300 py-2'>
                         <p>Delivery Fee:</p>
-                        <span className='text-blue-950 font-bold'>{total * 0.02} $</span>
+                        <span className='text-blue-950 font-bold'>{parseFloat(total * 0.02).toFixed(0)} $</span>
                     </div>
                     <div className='flex justify-between border-b-2 border-b-gray-300 py-2'>
                         <p>Total:</p>
                         <span className='text-blue-950 font-bold'>{total + total * 0.02}</span>
                     </div>
                     <button className='bg-blue-950 w-50 h-7 text-white rounded-md 
-                    cursor-pointer my-3 hover:w-60 duration-300'>
+                                        cursor-pointer my-3 hover:w-60 duration-300'>
                         Order Now
                     </button>
                 </div>
