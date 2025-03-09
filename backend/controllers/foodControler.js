@@ -19,7 +19,7 @@ const addFood = async (req, res) => {
     }
 }
 const getFood = async (req, res) => {
-    try {
+    try {        
         const food  = await foodModel.find({})
         return res.json({success:true, food})
     } catch(error) {
@@ -39,7 +39,7 @@ const addToCart = async (req, res) => {
     try {
         const productCart = await cartModel.findOne({ userId: req.user.id, productId }); 
         const product = await foodModel.findById(productId);
-                
+
         if (productCart) {
             product.count++;
             await product.save()
@@ -69,6 +69,10 @@ const removeFromCart = async (req, res) => {
     try {
         const productCart = await cartModel.findOne({ userId: req.user.id, productId }); 
         const product = await foodModel.findById(productId);
+        // if (productCart.count == 0) {
+        //     await cartModel.deleteOne({_id: productId, userId: req.user.id})
+        //     await cartModel.save()
+        // }
         product.count = Math.max(0, product.count - 1);
         await product.save()
         productCart.count = product.count;
@@ -90,7 +94,14 @@ const getCartData = async (req,res) => {
 const deleteFromCart = async(req, res) => {
     try {
         const {productId} = req.body
+        const productCart = await cartModel.findOne({_id: productId, userId: req.user.id})
+        const product = await foodModel.findOne({_id: productCart.productId})
+
         await cartModel.deleteOne({_id: productId, userId: req.user.id})
+        product.count = 0
+        await product.save()
+        
+
         
         return res.json({ success: true, message: "Product removed from cart successfully" });
     } catch (error) {
