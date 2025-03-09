@@ -69,16 +69,15 @@ const removeFromCart = async (req, res) => {
     try {
         const productCart = await cartModel.findOne({ userId: req.user.id, productId }); 
         const product = await foodModel.findById(productId);
-        // if (productCart.count == 0) {
-        //     await cartModel.deleteOne({_id: productId, userId: req.user.id})
-        //     await cartModel.save()
-        // }
+        if (product.count == 1) {
+            await cartModel.deleteOne({productId, userId: req.user.id})
+        } 
         product.count = Math.max(0, product.count - 1);
         await product.save()
         productCart.count = product.count;
         await productCart.save();
 
-        return res.json({success: true, massage: "remove from cart Successfully"})
+        return res.json({success: true, message: "remove from cart Successfully"})
     } catch(error) {
         return res.json({ success: false, message: error.message });
     }
