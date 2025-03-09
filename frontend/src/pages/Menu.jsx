@@ -6,11 +6,15 @@ import add from "../assets/add_icon_green.png"
 import remove from "../assets/remove_icon_red.png"
 
 export const Menu = () => {
-    const {dish, addToCart, removeFromCart ,handleIncrease, handleDecrease, fetchData} = useContext(StoreContext)
+    const {dish, cart, addToCart, removeFromCart, 
+            getCartData ,handleIncrease, handleDecrease, fetchData} = useContext(StoreContext)
     
     useEffect(() => {
         fetchData();
     }, []);
+    useEffect(() => {
+        getCartData()
+    }, [cart]);
     
     return (
         <div id='menu'>
@@ -25,7 +29,7 @@ export const Menu = () => {
                                     <h2 className='font-bold text-blue-950'>{ele.title}</h2>
                                     <div className='flex items-center gap-3'>
                                         <img onClick={() =>{ addToCart(ele._id), handleIncrease(ele)}} className='w-6 cursor-pointer' src={add} alt="add"/>
-                                        <span>{ele.count}</span >
+                                        <span>{cart.find(item => item.productId === ele._id)?.count || 0}</span >
                                         <img onClick={() =>{ removeFromCart(ele._id), handleDecrease(ele)}} className='w-6 cursor-pointer' src={remove} alt="remove" />
                                     </div>
                                 </div>

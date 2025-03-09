@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from "react"
+import { createContext, useState } from "react"
 import axios from "axios"
 import { useNavigate } from 'react-router-dom'
 
@@ -8,8 +8,7 @@ export const StoreContextProvider = (props) => {
     const navigate = useNavigate()
     const backendUrl = import.meta.env.VITE_BACKEND_URL; 
     
-    // Food Data
-
+    // Food Data (admin)
     const [dish, setDish] = useState([])
     const fetchData = async () => {
         try {
@@ -31,9 +30,10 @@ export const StoreContextProvider = (props) => {
                 console.log(error.message); 
             }
     } 
-
+    
     // Cart Data
     const addToCart = async (productId) => {
+        axios.defaults.withCredentials = true
         try {
             const {data} =  await axios.post(backendUrl + "food/add-to-cart", {productId})
             if (!data.success) {
@@ -42,29 +42,31 @@ export const StoreContextProvider = (props) => {
         } catch (error) {
             console.log(error.message);
         }
-        axios.defaults.withCredentials = true
     }
     const handleIncrease = (product) => {
-        const updatedDish = dish.map((ele) => 
+        const updateCount = cart.map((ele) => 
             ele._id === product._id ? { ...ele, count: ele.count + 1 } : ele
         );
-        setDish(updatedDish); 
+        setCart(updateCount); 
         };
     const removeFromCart = async (productId) => {
         try {
             axios.defaults.withCredentials = true
             const {data} =  await axios.post(backendUrl + "food/remove-from-cart", {productId})
-            
+            if (!data.success) {
+                navigate("/getStarted")
+            }
         } catch (error) {
             console.log(error.message);
         }
     }
     const handleDecrease = (product) => {
-        const updatedDish = dish.map((ele) => 
+        const updateCount = cart.map((ele) => 
             ele._id === product._id ? { ...ele, count: Math.max(0, ele.count - 1) } : ele
         );
-        setDish(updatedDish);
+        setCart(updateCount);
     };
+    
     const [cart, setCart] = useState([])
     const getCartData = async () => {
         try {
@@ -81,7 +83,6 @@ export const StoreContextProvider = (props) => {
             const {data} =  await axios.post(backendUrl + "food/delete-from-cart", {productId})
             if (data.success) {
                 getCartData()
-                fetchData()
             }
         } catch (error) {
             console.log(error.message);
@@ -93,7 +94,6 @@ export const StoreContextProvider = (props) => {
         fetchData,
         byCategory,
         dish,
-        setDish,
         addToCart,
         removeFromCart,
         handleIncrease,
@@ -102,6 +102,7 @@ export const StoreContextProvider = (props) => {
         cart,
         deleteFromCart
     }
+    
 
     return (
         <StoreContext.Provider value={value}>

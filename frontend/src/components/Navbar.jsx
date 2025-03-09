@@ -10,7 +10,7 @@ import axios  from 'axios'
 
 export const Navbar = () => {
     const navigate = useNavigate()
-    const{setIsLoggedin, userData, setUserData, backendUrl} = useContext(UserContext)
+    const{setIsLoggedin, isLoggedin ,userData, setUserData, backendUrl} = useContext(UserContext)
         const logout = async () => {
             try {
                 axios.defaults.withCredentials = true
@@ -36,7 +36,7 @@ export const Navbar = () => {
             </ul>
             <div className='flex items-center justify-between gap-10'>
                 <img className='w-6 cursor-pointer' src={Search_icon} alt="Search" />
-                <img onClick={() => {navigate("/cart")}} className='w-6 cursor-pointer' src={Basket_icon} alt="Basket" />
+                <img onClick={() => {isLoggedin ? navigate("/cart") : navigate("/getStarted")}} className='w-6 cursor-pointer' src={Basket_icon} alt="Basket" />
                     {userData ? 
                             <div className='cursor-pointer group'>
                                 <div className='bg-blue-950 rounded-4xl p-1 w-10 text-white text-center'>{userData.name[0].toUpperCase()}</div>

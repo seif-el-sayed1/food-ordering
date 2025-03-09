@@ -20,10 +20,6 @@ const foodSchema = new mongoose.Schema({
     category: {
         type: String,
         require: true
-    },
-    count: {
-        type: Number,
-        default: 0
     }
 })
 
