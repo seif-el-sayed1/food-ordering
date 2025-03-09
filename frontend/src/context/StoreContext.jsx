@@ -81,6 +81,7 @@ export const StoreContextProvider = (props) => {
             const {data} =  await axios.post(backendUrl + "food/delete-from-cart", {productId})
             if (data.success) {
                 getCartData()
+                fetchData()
             }
         } catch (error) {
             console.log(error.message);
@@ -101,10 +102,6 @@ export const StoreContextProvider = (props) => {
         cart,
         deleteFromCart
     }
-
-    useEffect(() => {
-        fetchData();
-    }, []);
 
     return (
         <StoreContext.Provider value={value}>

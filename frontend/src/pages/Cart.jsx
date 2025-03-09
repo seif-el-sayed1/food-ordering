@@ -39,8 +39,8 @@ export const Cart = () => {
                                         <td className='p-3'>{ele.count}</td>
                                         <td className='p-3'>{ele.price * ele.count} $</td>
                                         <td className='p-3'><img className='w-3 cursor-pointer' 
-                                                                    onClick={() => deleteFromCart(ele._id)} 
-                                                                    src={crossIcon} alt="DELETE"/></td>
+                                                                onClick={() => deleteFromCart(ele._id)} 
+                                                                src={crossIcon} alt="DELETE"/></td>
                                     </tr>
                                 )
                             })}
@@ -67,7 +67,7 @@ export const Cart = () => {
                     </div>
                     <div className='flex justify-between border-b-2 border-b-gray-300 py-2'>
                         <p>Delivery Fee:</p>
-                        <span className='text-blue-950 font-bold'>{parseFloat(total * 0.02).toFixed(0)} $</span>
+                        <span className='text-blue-950 font-bold'>{Math.round(total * 0.05)} $</span>
                     </div>
                     <div className='flex justify-between border-b-2 border-b-gray-300 py-2'>
                         <p>Total:</p>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import { useContext } from "react"  
 import { StoreContext } from "../context/StoreContext"
 import { FoodCategory } from '../components/foodCategory'
@@ -6,7 +6,11 @@ import add from "../assets/add_icon_green.png"
 import remove from "../assets/remove_icon_red.png"
 
 export const Menu = () => {
-    const {dish, addToCart, removeFromCart ,handleIncrease, handleDecrease} = useContext(StoreContext)
+    const {dish, addToCart, removeFromCart ,handleIncrease, handleDecrease, fetchData} = useContext(StoreContext)
+    
+    useEffect(() => {
+        fetchData();
+    }, []);
     
     return (
         <>
