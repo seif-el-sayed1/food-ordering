@@ -13,7 +13,7 @@ export const Menu = () => {
     }, []);
     
     return (
-        <>
+        <div id='menu'>
             <FoodCategory />
             <div className="m-20 grid grid-cols-4 gap-10">
                 {dish.map((ele) => {
@@ -36,6 +36,6 @@ export const Menu = () => {
                     )
                 })}
             </div>
-        </>
+        </div>
     )
 }

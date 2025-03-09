@@ -1,7 +1,10 @@
 import React from 'react'
 import header from "../assets/header.jpg"
+import { useNavigate } from 'react-router-dom'
+
 
 export const Header = () => {
+    const navigate = useNavigate()
     return (
         <div style={{backgroundImage:`url(${header})`, backgroundSize:"cover"}} 
             className="container mx-20 pl-10 w-auto h-100 bg-orange-600 rounded-xl relative">
@@ -11,9 +14,9 @@ export const Header = () => {
                         ingredients and culinary expertise. our mission is to satisfy your cravings and 
                         elevate <br /> your dining experience,  one delicious meal at all time.
                     </p>
-                    <button className='rounded-full text-blue-950 text-sm
+                    <button onClick={() => navigate("/getStarted")} className='rounded-full text-blue-950 text-sm
                     cursor-pointer px-4 py-3 my-3 bg-white hover:bg-blue-950 
-                    hover:text-white transition'>View Menu</button>
+                    hover:text-white transition'>Get Started</button>
                 </div>
         </div>
     )

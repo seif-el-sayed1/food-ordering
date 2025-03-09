@@ -6,7 +6,6 @@ import { useNavigate } from 'react-router-dom'
 import { UserContext } from "../context/userContext";
 import {toast} from "react-toastify"
 import axios  from 'axios'
-import { StoreContext } from '../context/StoreContext'
 
 
 export const Navbar = () => {
@@ -31,8 +30,8 @@ export const Navbar = () => {
             <img className='w-20' src={Logo} alt="LOGO" />
             <ul className='flex items-center justify-between gap-10 
                             text-lg text-blue-950'>
-                <li className='cursor-pointer border-b-2 '>Home</li>
-                <li className='cursor-pointer'>Menu</li>
+                <li className='cursor-pointer border-b-2' onClick={() => navigate("/")}>Home</li>
+                <li className='cursor-pointer'><a href="#menu">Menu</a></li>
                 <li className='cursor-pointer'>Contact Us</li>
             </ul>
             <div className='flex items-center justify-between gap-10'>

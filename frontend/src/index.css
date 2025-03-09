@@ -4,6 +4,9 @@
     font-family: "Cairo", serif;
     box-sizing: border-box;
 }
+html {
+    scroll-behavior: smooth;
+}
 .categories::-webkit-scrollbar {
     height: 0px;
 }
