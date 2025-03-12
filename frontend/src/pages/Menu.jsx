@@ -13,6 +13,7 @@ export const Menu = () => {
     useEffect(() => {
         fetchData();
     }, []);
+    
     useEffect(() => {
         getCartData()
     }, [cart]);

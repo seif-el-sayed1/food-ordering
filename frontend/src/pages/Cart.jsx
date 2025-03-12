@@ -5,6 +5,7 @@ import { Navbar}  from "../components/Navbar"
 import crossIcon from "../assets/cross_icon.png"
 import { useNavigate } from 'react-router-dom'
 import { Footer } from '../components/Footer'
+import { toast } from 'react-toastify'
 
 export const Cart = () => {
     const { cart, getCartData, deleteFromCart } = useContext(StoreContext)
@@ -74,7 +75,7 @@ export const Cart = () => {
                         <p>Total:</p>
                         <span className='text-blue-950 font-bold'>{total + total * 0.02} $</span>
                     </div>
-                    <button className='bg-blue-950 w-50 h-7 text-white rounded-md 
+                    <button onClick={() => {cart.length == 0 ? toast.error("Empty Cart") : navigate("/order")}} className='bg-blue-950 w-50 h-7 text-white rounded-md 
                                         cursor-pointer my-3 hover:w-60 duration-300'>
                         Order Now
                     </button>
