@@ -4,6 +4,7 @@ import { StoreContext } from '../context/StoreContext'
 import { Navbar}  from "../components/Navbar"
 import crossIcon from "../assets/cross_icon.png"
 import { useNavigate } from 'react-router-dom'
+import { Footer } from '../components/Footer'
 
 export const Cart = () => {
     const { cart, getCartData, deleteFromCart } = useContext(StoreContext)
@@ -78,8 +79,8 @@ export const Cart = () => {
                         Order Now
                     </button>
                 </div>
-                
             </div>
+            <Footer />
         </div>
     );
 }

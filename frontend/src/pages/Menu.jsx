@@ -4,6 +4,7 @@ import { StoreContext } from "../context/StoreContext"
 import { FoodCategory } from '../components/foodCategory'
 import add from "../assets/add_icon_green.png"
 import remove from "../assets/remove_icon_red.png"
+import { Footer } from '../components/Footer'
 
 export const Menu = () => {
     const {dish, cart, addToCart, removeFromCart, 
@@ -40,6 +41,7 @@ export const Menu = () => {
                     )
                 })}
             </div>
+            <Footer />
         </div>
     )
 }
