@@ -14,7 +14,7 @@ export const StoreContextProvider = (props) => {
         try {
             const { data } = await axios.get(backendUrl + "food/get-food");
             if (data.success) {
-                setDish(data.food);
+                setDish(data.food.sort((a, b) => a.category.localeCompare(b.category)));
             }
         } catch (error) {
             console.log(error.message);
