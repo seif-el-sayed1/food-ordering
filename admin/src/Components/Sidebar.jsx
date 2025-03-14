@@ -8,7 +8,7 @@ export const Sidebar = () => {
     const navigate = useNavigate()
 
     return (
-        <div className='w-55 border-r-1 border-gray-500 h-dvh ml-10 pt-10'>
+        <div className='w-55 border-r-1 border-gray-500 ml-10 pt-10'>
             <div onClick={() => {setState("add"), navigate("/")}} className={state === "add" 
                 ? 'flex gap-10 text-blue-950 font-bold duration-500 my-3 p-2 w-full border border-gray-500 cursor-pointer' 
                 : 'flex gap-5 my-3 p-2 w-full border border-gray-500 cursor-pointer'}>
