@@ -30,7 +30,7 @@ export const AddItems = () => {
                         <select name="category" className='p-1 w-30 border-1 border-gray-500 outline-none '>
                             <option value="Burger">Burger</option>
                             <option value="Pizza">Pizza</option>
-                            <option value="">Fried Chicken</option>
+                            <option value="Fried Chicken">Fried Chicken</option>
                             <option value="Pasta">Pasta</option>
                             <option value="Salad">Salad</option>
                             <option value="Drinks">Drinks</option>

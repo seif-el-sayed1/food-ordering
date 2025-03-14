@@ -10,7 +10,7 @@ function App() {
     <>
       <ToastContainer />
       <Navbar />
-      <div className="flex gap-20 items-center">
+      <div className="flex gap-20">
         <Sidebar /> 
         <Routes>
           <Route element={<AddItems />} path="/" /> 

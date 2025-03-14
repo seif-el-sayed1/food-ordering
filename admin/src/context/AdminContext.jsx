@@ -1,5 +1,6 @@
 import { createContext, useState } from "react"
 import axios from "axios"
+import { toast } from "react-toastify";
 
 export const AdminContext = createContext();
 
@@ -19,10 +20,22 @@ export const AdminContextProvider = (props) => {
         }
     };
     
+    const deleteFood = async(productId) => {
+        try {
+            const {data} = await axios.post(backendUrl + "food/delete-food", {productId})
+            if (data.success) {
+                fetchData()
+                toast.success(data.message)
+            }
+        } catch (error) {
+            console.log(error.message)
+        }
+    }
+
     const value = {
-        backendUrl,
         fetchData,
         dish,
+        deleteFood,
     }
     
 
