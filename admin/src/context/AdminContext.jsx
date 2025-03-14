@@ -8,12 +8,13 @@ export const AdminContextProvider = (props) => {
     const backendUrl = import.meta.env.VITE_BACKEND_URL; 
     
     // Food Data (admin)
+    
     const [dish, setDish] = useState([])
     const fetchData = async () => {
         try {
             const { data } = await axios.get(backendUrl + "food/get-food");
             if (data.success) {
-                setDish(data.food);
+                setDish(data.food.sort((a, b) => a.category.localeCompare(b.category)));
             }
         } catch (error) {
             console.log(error.message);
@@ -33,6 +34,7 @@ export const AdminContextProvider = (props) => {
     }
 
     const value = {
+        backendUrl,
         fetchData,
         dish,
         deleteFood,
