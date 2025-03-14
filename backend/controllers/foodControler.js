@@ -11,7 +11,6 @@ const addFood = async (req, res) => {
             price,
             description,
             category,
-            count
         })
         await newFood.save()
         return res.json({success: true, message: "Item Added Successfully"})
