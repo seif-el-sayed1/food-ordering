@@ -14,7 +14,16 @@ const addFood = async (req, res) => {
             count
         })
         await newFood.save()
-        return res.json({success: true, newFood})
+        return res.json({success: true, message: "Item Added Successfully"})
+    } catch (error) {
+        return res.json({success: false, message: error.message})
+    }
+}
+const deleteFood = async(req, res) => {
+    try {
+        const {productId} = req.body
+        await foodModel.deleteOne({_id: productId})
+        return res.json({success: true, message: "Item Deleted Successfully"})
     } catch (error) {
         return res.json({success: false, message: error.message})
     }
@@ -97,6 +106,7 @@ const deleteFromCart = async(req, res) => {
 
 module.exports = {
     addFood,
+    deleteFood,
     getFood,
     getFoodByCAtegory,
     addToCart,

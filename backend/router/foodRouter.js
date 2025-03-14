@@ -31,6 +31,7 @@ const upload = multer({
 })
 // food (admin)
 router.route("/add-food").post(upload.single("image"), setFileUrl, foodController.addFood)
+router.route("/delete-food").post(foodController.deleteFood)
 router.route("/get-food").get(foodController.getFood)
 router.route("/get-food/:category").get(foodController.getFoodByCAtegory)
 
