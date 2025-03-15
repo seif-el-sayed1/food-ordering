@@ -81,6 +81,7 @@ const removeFromCart = async (req, res) => {
         } else {
             await cartModel.deleteOne({ productId, userId: req.user.id });
         }            
+        return res.json({success: true, massage: "remove to cart Successfully"})
     } catch(error) {
         return res.json({ success: false, message: error.message });
     }
