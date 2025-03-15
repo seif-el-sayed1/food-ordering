@@ -33,7 +33,7 @@ const upload = multer({
 router.route("/add-food").post(upload.single("image"), setFileUrl, foodController.addFood)
 router.route("/delete-food").post(foodController.deleteFood)
 router.route("/get-food").get(foodController.getFood)
-router.route("/get-food/:category").get(foodController.getFoodByCAtegory)
+router.route("/get-food/:category").get(foodController.getFoodByCategory)
 
 // Cart
 router.route("/add-to-cart").post(verifyToken, foodController.addToCart)

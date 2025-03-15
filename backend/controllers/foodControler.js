@@ -35,7 +35,7 @@ const getFood = async (req, res) => {
         return res.json({success: false, message: error.message})
     }
 }
-const getFoodByCAtegory = async (req, res) => {
+const getFoodByCategory = async (req, res) => {
     try {
         const category = await foodModel.find({category: req.params.category})
         return res.json({success:true, category})
@@ -107,7 +107,7 @@ module.exports = {
     addFood,
     deleteFood,
     getFood,
-    getFoodByCAtegory,
+    getFoodByCategory,
     addToCart,
     removeFromCart,
     getCartData,
