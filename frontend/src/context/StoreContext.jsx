@@ -1,15 +1,16 @@
-import { createContext, useState } from "react"
-import axios from "axios"
-import { useNavigate } from 'react-router-dom'
+import { createContext, useState } from "react";
+import axios from "axios";
+
 
 export const StoreContext = createContext();
 
 export const StoreContextProvider = (props) => {
-    const navigate = useNavigate()
-    const backendUrl = import.meta.env.VITE_BACKEND_URL; 
-    
+    const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
+    const [dish, setDish] = useState([]);
+    const [cart, setCart] = useState([]);
+    const [loading, setLoading] = useState(true)
     // Food Data (admin)
-    const [dish, setDish] = useState([])
     const fetchData = async () => {
         try {
             const { data } = await axios.get(backendUrl + "food/get-food");
@@ -18,76 +19,94 @@ export const StoreContextProvider = (props) => {
             }
         } catch (error) {
             console.log(error.message);
+        } finally {
+            setLoading(false)
         }
     };
+
     const byCategory = async (category) => {
-            try {
-                const { data } = await axios.get(`${backendUrl}food/get-food/${category}`);
-                if (data.success) {  
-                    setDish(data.category);
-                }
-            } catch (error) {
-                console.log(error.message); 
+        try {
+            const { data } = await axios.get(`${backendUrl}food/get-food/${category}`);
+            if (data.success) {
+                setDish(data.category);
             }
-    } 
-    
+        } catch (error) {
+            console.log(error.message);
+        } finally {
+            setLoading(false)
+        }
+    };
+
     // Cart Data
     const addToCart = async (productId) => {
-        axios.defaults.withCredentials = true
+        axios.defaults.withCredentials = true;
         try {
-            const {data} =  await axios.post(backendUrl + "food/add-to-cart", {productId})
-            if (!data.success) {
-                navigate("/getStarted")
+            const productCart = cart.find(ele => ele.productId === productId);
+            if (productCart) {
+                setCart(cart.map(ele =>
+                    ele.productId === productId ? { ...ele, count: ele.count + 1 } : ele
+                ));
+            } else {
+                const product = await axios.get(`${backendUrl}food/get-food`).then(res =>
+                    res.data.food.find(item => item._id === productId)
+                );
+                setCart([...cart, {
+                    productId,
+                    image: product.image,
+                    title: product.title,
+                    price: product.price,
+                    description: product.description,
+                    count: 1
+                }]);
             }
+            await axios.post(backendUrl + "food/add-to-cart", { productId });
         } catch (error) {
             console.log(error.message);
+            getCartData(); 
         }
-    }
-    const handleIncrease = (product) => {
-        const updateCount = cart.map((ele) => 
-            ele._id === product._id ? { ...ele, count: ele.count + 1 } : ele
-        );
-        setCart(updateCount); 
-        };
+    };
+
     const removeFromCart = async (productId) => {
+        axios.defaults.withCredentials = true;
         try {
-            axios.defaults.withCredentials = true
-            const {data} =  await axios.post(backendUrl + "food/remove-from-cart", {productId})
+            const productCart = cart.find(item => item.productId === productId);
+            if (productCart.count > 1) {
+                setCart(cart.map(item =>
+                    item.productId === productId ? { ...item, count: item.count - 1 } : item
+                ));
+            } else {
+                setCart(cart.filter(item => item.productId !== productId));
+            }
+            await axios.post(backendUrl + "food/remove-from-cart", { productId });
+        } catch (error) {
+            console.log(error.message);
+            getCartData(); 
+        }
+    };
+
+    const deleteFromCart = async (productId) => {
+        try {
+            setCart(cart.filter(item => item._id !== productId));
+            const { data } = await axios.post(backendUrl + "food/delete-from-cart", { productId });
             if (!data.success) {
-                navigate("/getStarted")
+                getCartData(); 
             }
         } catch (error) {
             console.log(error.message);
+            getCartData(); 
         }
-    }
-    const handleDecrease = (product) => {
-        const updateCount = cart.map((ele) => 
-            ele._id === product._id ? { ...ele, count: Math.max(0, ele.count - 1) } : ele
-        );
-        setCart(updateCount);
     };
     
-    const [cart, setCart] = useState([])
     const getCartData = async () => {
         try {
             const { data } = await axios.get(backendUrl + "food/cart", { withCredentials: true });
             if (data.success) {
-                setCart(data.cart); 
+                setCart(data.cart);
             }
         } catch (error) {
             console.log(error.message);
-        }
+        } 
     };
-    const deleteFromCart = async(productId) => {
-        try {
-            const {data} =  await axios.post(backendUrl + "food/delete-from-cart", {productId})
-            if (data.success) {
-                getCartData()
-            }
-        } catch (error) {
-            console.log(error.message);
-        }
-    }
 
     const value = {
         backendUrl,
@@ -96,17 +115,15 @@ export const StoreContextProvider = (props) => {
         dish,
         addToCart,
         removeFromCart,
-        handleIncrease,
-        handleDecrease,
         getCartData,
         cart,
-        deleteFromCart
-    }
-    
+        deleteFromCart,
+        loading
+    };
 
     return (
         <StoreContext.Provider value={value}>
             {props.children}
         </StoreContext.Provider>
-    )
-}
+    );
+};
