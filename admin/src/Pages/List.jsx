@@ -1,15 +1,21 @@
 import React, { useContext, useEffect } from 'react'
 import { AdminContext } from '../context/AdminContext'
 import crossIcon from "../assets/cross_icon.png"
+import { Loading } from '../Components/Loading'
 
 export const List = () => {
-    const {dish, fetchData, deleteFood} = useContext(AdminContext)
+    const {dish, fetchData, deleteFood, loading} = useContext(AdminContext)
 
     useEffect(() => {
         fetchData()
     },[])
     
-    
+    if (loading) {
+        return (
+            <Loading />
+        )
+    }
+
     return (
         <div className='pr-20 mt-10 w-full'>
             <table className='w-full border-1 border-gray-500'>
