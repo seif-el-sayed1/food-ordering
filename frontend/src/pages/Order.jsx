@@ -14,29 +14,9 @@ export const Order = () => {
                 <div>
                     <h2 className='text-2xl text-blue-950 font-bold pb-5'>Delivery Information</h2>
                     <form >
-                        <div className='w-100'>
-                            <input className='py-1 pl-2 outline-0 my-2 w-49 border-1 border-gray-400 rounded-sm ' 
-                                    type="text" placeholder='First Name' />
-                            <input className='py-1 pl-2 outline-0 ml-2 my-2 w-49 border-1 border-gray-400 rounded-sm ' 
-                                    type="text" placeholder='last Name' />
-                        </div>
-                        <input className='py-1 px-2 my-2 outline-0 w-100 border-1 border-gray-400 rounded-sm ' 
-                                type="email" placeholder='Email'/>
-                        <input className='py-1 px-2 my-2 outline-0 w-100 border-1 border-gray-400 rounded-sm ' 
-                                type="text" placeholder='Street'/>
-                        <div className='w-100'>
-                            <input className='py-1 pl-2 outline-0  my-2 w-49 border-1 border-gray-400 rounded-sm ' 
-                                    type="text" placeholder='City'/>
-                            <input className='py-1 pl-2 outline-0 ml-2 my-2 w-49 border-1 border-gray-400 rounded-sm ' 
-                                    type="text" placeholder='State'/>
-                        </div>
-                        <div className='w-100'>
-                            <input className='py-1 pl-2 outline-0  my-2 w-49 border-1 border-gray-400 rounded-sm ' 
-                                    type="text" placeholder='Zip Code'/>
-                            <input className='py-1 pl-2 outline-0 ml-2 my-2 w-49 border-1 border-gray-400 rounded-sm ' 
-                                    type="text" placeholder='Country'/>
-                        </div>
-                        <input className='py-1 px-2 my-2 outline-0 w-100 border-1 border-gray-400 rounded-sm ' 
+                        <input className='py-1 px-2 my-1 outline-0 w-100 border-1 border-gray-400 rounded-sm ' 
+                                type="text" placeholder='Address'/>
+                        <input className='py-1 px-2 my-1 outline-0 w-100 border-1 border-gray-400 rounded-sm ' 
                                 type="text" placeholder='Number'/>
                     </form>
                 </div>
