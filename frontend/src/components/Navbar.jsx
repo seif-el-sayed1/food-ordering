@@ -30,9 +30,12 @@ export const Navbar = () => {
             <img className='w-20' src={Logo} alt="LOGO" />
             <ul className='flex items-center justify-between gap-10 
                             text-lg text-blue-950'>
-                <li className='cursor-pointer border-b-2' onClick={() => navigate("/")}>Home</li>
-                <li className='cursor-pointer'><a href="#menu">Menu</a></li>
-                <li className='cursor-pointer'>Contact Us</li>
+                <li className='cursor-pointer hover:font-bold duration-200' onClick={() => navigate("/")}>Home</li>
+                <li className='cursor-pointer hover:font-bold duration-200' onClick={() => navigate("/")}>
+                    <a href="#menu">Menu</a>
+                </li>
+                <li className='cursor-pointer hover:font-bold duration-200'>My Orders</li>
+                <li className='cursor-pointer hover:font-bold duration-200'>Contact Us</li>
             </ul>
             <div className='flex items-center justify-between gap-10'>
                 <img className='w-6 cursor-pointer' src={Search_icon} alt="Search" />
