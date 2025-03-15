@@ -6,9 +6,8 @@ export const AdminContext = createContext();
 
 export const AdminContextProvider = (props) => {
     const backendUrl = import.meta.env.VITE_BACKEND_URL; 
-    
+    const [loading, setLoading] = useState(true)
     // Food Data (admin)
-    
     const [dish, setDish] = useState([])
     const fetchData = async () => {
         try {
@@ -18,6 +17,8 @@ export const AdminContextProvider = (props) => {
             }
         } catch (error) {
             console.log(error.message);
+        } finally {
+            setLoading(false)
         }
     };
     
@@ -38,10 +39,9 @@ export const AdminContextProvider = (props) => {
         fetchData,
         dish,
         deleteFood,
+        loading    
     }
-    
-
-
+        
     return (
         <AdminContext.Provider value={value}>
             {props.children}
