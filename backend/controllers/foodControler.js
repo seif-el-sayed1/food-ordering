@@ -145,6 +145,16 @@ const getOrder = async (req, res) => {
     }
 }
 
+// Admin
+const ordersData = async (req, res) => {
+    try {
+        const orders = await orderModel.find({})
+        return res.json({success: true, orders})
+    } catch (error) {
+        return res.json({success:false, message: error.message})
+    }
+}
+
 module.exports = {
     addFood,
     deleteFood,
@@ -155,5 +165,6 @@ module.exports = {
     getCartData,
     deleteFromCart,
     addOrder,
-    getOrder
+    getOrder,
+    ordersData
 }
