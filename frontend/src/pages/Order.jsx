@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Navbar } from '../components/Navbar'
 import { StoreContext } from '../context/StoreContext';
 import { Footer } from '../components/Footer';
@@ -7,12 +7,16 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 
 export const Order = () => {
-    const {cart, backendUrl} = useContext(StoreContext)
+    const {cart, backendUrl, getCartData} = useContext(StoreContext)
     const total = cart.reduce((acc, curr) => acc + curr.price * curr.count, 0);
     const navigate = useNavigate()
 
     const [address, setAddress] = useState("")
     const [number, setNumber] = useState("")
+
+    useEffect(() => {
+        getCartData();
+    },[])
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -21,6 +25,9 @@ export const Order = () => {
             const {data} = await axios.post(backendUrl + "food/add-order", {address, number})
             if(data.success) {
                 toast.success(data.message)
+                navigate("/myOrder")
+            } else {
+                toast.error(data.message)
             }
         } catch (error) {
             console.log(error.message)
@@ -34,15 +41,14 @@ export const Order = () => {
                 <div>
                     <h2 className='text-2xl text-blue-950 font-bold pb-5'>Delivery Information</h2>
                     <form onSubmit={handleSubmit}>
-                        <input  onChange={(e) => setAddress(e.target.value)}
+                        <input  onChange={(e) => setAddress(e.target.value)} required
                                 className='py-1 px-2 my-1 outline-0 w-100 border-1 border-gray-400 rounded-sm ' 
                                 type="text" placeholder='Address'/>
-                        <input  onChange={(e) => setNumber(e.target.value)}
+                        <input  onChange={(e) => setNumber(e.target.value)} required
                                 className='py-1 px-2 my-1 outline-0 w-100 border-1 border-gray-400 rounded-sm ' 
                                 type="text" placeholder='Number'/>
-                        <button  onClick={() => {navigate("/myOrder")}}  type='submit'
-                                        className='bg-blue-950 w-100 h-7 text-white rounded-md 
-                                            cursor-pointer my-3 hover:bg-blue-900 duration-300'>
+                        <button type='submit' className='bg-blue-950 w-100 h-7 text-white rounded-md 
+                                                            cursor-pointer my-3 hover:bg-blue-900 duration-300'>
                             Order Now
                         </button>
                     </form>
