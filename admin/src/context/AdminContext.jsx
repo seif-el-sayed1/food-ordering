@@ -6,9 +6,12 @@ export const AdminContext = createContext();
 
 export const AdminContextProvider = (props) => {
     const backendUrl = import.meta.env.VITE_BACKEND_URL; 
-    const [loading, setLoading] = useState(true)
-    // Food Data (admin)
+
     const [dish, setDish] = useState([])
+    const [clientOrder, setClientOrder] = useState([])
+    const [loading, setLoading] = useState(true)
+    
+    // Food Data (admin)
     const fetchData = async () => {
         try {
             const { data } = await axios.get(backendUrl + "food/get-food");
@@ -34,12 +37,29 @@ export const AdminContextProvider = (props) => {
         }
     }
 
+    const getOrders = async () => {
+        try {
+            const { data } = await axios.get(backendUrl + "food/get-admin-orders");
+            if (data.success) {
+                setClientOrder(data.clientOrder)
+                console.log(Z);
+                
+            }
+        } catch (error) {
+            console.log(error.message)
+        } finally {
+            setLoading(false)
+        }
+    }
+
     const value = {
         backendUrl,
         fetchData,
         dish,
         deleteFood,
-        loading    
+        loading,
+        clientOrder,
+        getOrders
     }
         
     return (

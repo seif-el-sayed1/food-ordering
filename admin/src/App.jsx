@@ -4,8 +4,9 @@ import { Navbar } from "./Components/Navbar"
 import { Sidebar } from "./Components/Sidebar"
 import { AddItems } from "./Pages/AddItems"
 import { List } from "./Pages/List";
-function App() {
+import { Orders } from "./Pages/Orders"
 
+function App() {
   return (
     <>
       <ToastContainer />
@@ -15,6 +16,7 @@ function App() {
         <Routes>
           <Route element={<AddItems />} path="/" /> 
           <Route element={<List />} path="/list" /> 
+          <Route element={<Orders /> } path="/orders" /> 
         </Routes>
       </div>
     </>
