@@ -39,7 +39,7 @@ export const Cart = () => {
                         <tbody>
                             {cart.map((ele) => {
                                 return (
-                                    <tr className='text-center border-b-2 pb-5 border-b-gray-300' key={ele._id}>
+                                    <tr key={ele._id} className='text-center border-b-2 pb-5 border-b-gray-300' key={ele._id}>
                                         <td className='flex justify-center p-3'><img className='w-15 h-10' src={ele.image} alt="ITEM" /></td>
                                         <td className='p-3'>{ele.title}</td>
                                         <td className='p-3'>{ele.price} $</td>
