@@ -1,11 +1,31 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { Navbar } from '../components/Navbar'
 import { StoreContext } from '../context/StoreContext';
 import { Footer } from '../components/Footer';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 export const Order = () => {
-    const {cart} = useContext(StoreContext)
+    const {cart, backendUrl} = useContext(StoreContext)
     const total = cart.reduce((acc, curr) => acc + curr.price * curr.count, 0);
+    const navigate = useNavigate()
+
+    const [address, setAddress] = useState("")
+    const [number, setNumber] = useState("")
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        
+        try {
+            const {data} = await axios.post(backendUrl + "food/add-order", {address, number})
+            if(data.success) {
+                toast.success(data.message)
+            }
+        } catch (error) {
+            console.log(error.message)
+        }
+    }
 
     return (
         <div>
@@ -13,11 +33,18 @@ export const Order = () => {
             <div className='px-20 py-10 flex justify-between items-center'>
                 <div>
                     <h2 className='text-2xl text-blue-950 font-bold pb-5'>Delivery Information</h2>
-                    <form >
-                        <input className='py-1 px-2 my-1 outline-0 w-100 border-1 border-gray-400 rounded-sm ' 
+                    <form onSubmit={handleSubmit}>
+                        <input  onChange={(e) => setAddress(e.target.value)}
+                                className='py-1 px-2 my-1 outline-0 w-100 border-1 border-gray-400 rounded-sm ' 
                                 type="text" placeholder='Address'/>
-                        <input className='py-1 px-2 my-1 outline-0 w-100 border-1 border-gray-400 rounded-sm ' 
+                        <input  onChange={(e) => setNumber(e.target.value)}
+                                className='py-1 px-2 my-1 outline-0 w-100 border-1 border-gray-400 rounded-sm ' 
                                 type="text" placeholder='Number'/>
+                        <button  onClick={() => {navigate("/myOrder")}}  type='submit'
+                                        className='bg-blue-950 w-100 h-7 text-white rounded-md 
+                                            cursor-pointer my-3 hover:bg-blue-900 duration-300'>
+                            Order Now
+                        </button>
                     </form>
                 </div>
                 <div>
@@ -35,10 +62,6 @@ export const Order = () => {
                             <p>Total:</p>
                             <span className='text-blue-950 font-bold'>{total + total * 0.02} $</span>
                         </div>
-                        <button className='bg-blue-950 w-50 h-7 text-white rounded-md 
-                                            cursor-pointer my-3 hover:w-60 duration-300'>
-                            Payment
-                        </button>
                     </div>
                 </div>
             </div>

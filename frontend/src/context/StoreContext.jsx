@@ -1,7 +1,6 @@
 import { createContext, useState } from "react";
 import axios from "axios";
 
-
 export const StoreContext = createContext();
 
 export const StoreContextProvider = (props) => {
@@ -9,7 +8,9 @@ export const StoreContextProvider = (props) => {
 
     const [dish, setDish] = useState([]);
     const [cart, setCart] = useState([]);
+    const [clientOrder, setClientOrder] = useState([]);
     const [loading, setLoading] = useState(true)
+
     // Food Data (admin)
     const fetchData = async () => {
         try {
@@ -108,6 +109,20 @@ export const StoreContextProvider = (props) => {
         } 
     };
 
+    // Orders
+    const getOrder = async () => {
+        try {
+            const { data } = await axios.get(backendUrl + "food/get-order", { withCredentials: true });
+            if (data.success) {
+                setClientOrder(data.clientOrder)
+            }
+        } catch (error) {
+            console.log(error.message)
+        } finally {
+            setLoading(false)
+        }
+    }
+
     const value = {
         backendUrl,
         fetchData,
@@ -118,7 +133,9 @@ export const StoreContextProvider = (props) => {
         getCartData,
         cart,
         deleteFromCart,
-        loading
+        loading,
+        getOrder,
+        clientOrder
     };
 
     return (

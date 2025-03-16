@@ -34,7 +34,7 @@ export const Navbar = () => {
                 <li className='cursor-pointer hover:font-bold duration-200' onClick={() => navigate("/")}>
                     <a href="#menu">Menu</a>
                 </li>
-                <li className='cursor-pointer hover:font-bold duration-200'>My Orders</li>
+                <li className='cursor-pointer hover:font-bold duration-200' onClick={() => navigate("/myOrder")}>My Orders</li>
                 <li className='cursor-pointer hover:font-bold duration-200'>Contact Us</li>
             </ul>
             <div className='flex items-center justify-between gap-10'>
