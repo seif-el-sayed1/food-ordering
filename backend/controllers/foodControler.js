@@ -1,5 +1,7 @@
-const cartModel = require("../models/cartModel")
+const userModel = require("../models/userModel")
 const foodModel = require("../models/foodModel")
+const cartModel = require("../models/cartModel")
+const orderModel = require("../models/orderModel")
 
 // admin
 const addFood = async (req, res) => {
@@ -71,6 +73,7 @@ const addToCart = async (req, res) => {
         return res.json({ success: false, message: error.message });
     }
 };
+
 const removeFromCart = async (req, res) => {
     const { productId } = req.body;
     try {
@@ -86,14 +89,7 @@ const removeFromCart = async (req, res) => {
         return res.json({ success: false, message: error.message });
     }
 }
-const getCartData = async (req,res) => {
-    try {
-        const cart = await cartModel.find({userId: req.user.id})
-        return res.json({success: true, cart})
-    } catch (error) {
-        return res.json({ success: false, message: error.message });
-    }
-}
+
 const deleteFromCart = async(req, res) => {
     try {
         const {productId} = req.body
@@ -104,6 +100,51 @@ const deleteFromCart = async(req, res) => {
     }    
 }
 
+const getCartData = async (req,res) => {
+    try {
+        const cart = await cartModel.find({userId: req.user.id})
+        return res.json({success: true, cart})
+    } catch (error) {
+        return res.json({ success: false, message: error.message });
+    }
+}
+
+// Orders
+const addOrder = async (req, res) => {
+    try {
+        const {address, number} = req.body
+
+        const user = await userModel.findById(req.user.id)
+        const cart = await cartModel.find({ userId: req.user.id });
+        if (!cart) {
+            return res.json({ success: false, message: "Cart is empty" });
+        }
+        
+        const newOrder =  new orderModel({
+            userId: req.user.id,
+            clientName: user.name,
+            address,
+            number,
+            order: cart
+        })
+        await newOrder.save()
+        await cartModel.deleteMany({ userId: req.user.id });
+
+        return res.json({success: true, message: "Order is Preparing"})
+    } catch (error) {
+        return res.json({success:false, message: error.message})
+    }
+}
+
+const getOrder = async (req, res) => {
+    try {
+        const clientOrder = await orderModel.find({userId: req.user.id})
+        return res.json({success: true, clientOrder})
+    } catch (error) {
+        return res.json({success:false, message: error.message})
+    }
+}
+
 module.exports = {
     addFood,
     deleteFood,
@@ -112,5 +153,7 @@ module.exports = {
     addToCart,
     removeFromCart,
     getCartData,
-    deleteFromCart
+    deleteFromCart,
+    addOrder,
+    getOrder
 }
