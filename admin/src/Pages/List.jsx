@@ -17,7 +17,7 @@ export const List = () => {
     }
 
     return (
-        <div className='pr-20 mt-10 w-full'>
+        <div className='pr-20 my-10 w-full'>
             <table className='w-full border-1 border-gray-500'>
                 <thead className='bg-gray-50 border-b-1 border-gray-500'>
                     <tr>
