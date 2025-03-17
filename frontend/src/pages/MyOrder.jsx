@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Navbar } from '../components/Navbar'
+import { UserContext } from '../context/userContext';
 import { StoreContext } from '../context/StoreContext'
 import { Footer } from "../components/Footer"
 import { Loading } from '../components/Loading'
@@ -10,9 +11,13 @@ export const MyOrder = () => {
     const { clientOrder, getOrder, loading } = useContext(StoreContext)
     const navigate = useNavigate()
 
+    const {authState} = useContext(UserContext)
+    
     useEffect(() => {
+        authState()
         getOrder()
     }, [])
+
     useEffect(() => {
         getOrder()
     }, [clientOrder])

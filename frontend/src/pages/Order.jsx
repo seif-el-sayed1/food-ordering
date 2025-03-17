@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Navbar } from '../components/Navbar'
 import { StoreContext } from '../context/StoreContext';
+import { UserContext } from '../context/userContext';
 import { Footer } from '../components/Footer';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -10,12 +11,14 @@ export const Order = () => {
     const {cart, backendUrl, getCartData} = useContext(StoreContext)
     const total = cart.reduce((acc, curr) => acc + curr.price * curr.count, 0);
     const navigate = useNavigate()
-
     const [address, setAddress] = useState("")
     const [number, setNumber] = useState("")
+    const {authState} = useContext(UserContext)
+
 
     useEffect(() => {
         getCartData();
+        authState()
     },[])
 
     const handleSubmit = async (e) => {

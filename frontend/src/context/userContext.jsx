@@ -46,9 +46,9 @@ export const UserContextProvider = (props) => {
         authState
     };
 
-    useEffect(() => {
-        authState()
-    },[])
+    // useEffect(() => {
+    //     authState()
+    // },[])
 
     return (
         <UserContext.Provider value={value}>

@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import emptyCart from "../assets/emptyCart.png";
 import { StoreContext } from '../context/StoreContext';
+import { UserContext } from '../context/userContext';
 import { Navbar } from "../components/Navbar";
 import crossIcon from "../assets/cross_icon.png";
 import { useNavigate } from 'react-router-dom';
@@ -10,11 +11,15 @@ import { Loading } from '../components/Loading';
 
 export const Cart = () => {
     const { cart, getCartData, deleteFromCart, loading } = useContext(StoreContext);
+
+    const {authState} = useContext(UserContext)
+
     const navigate = useNavigate();
     const total = cart.reduce((acc, curr) => acc + curr.price * curr.count, 0);
 
     useEffect(() => {
         getCartData();
+        authState()
     }, []);
 
     if (loading) {
@@ -39,7 +44,7 @@ export const Cart = () => {
                         <tbody>
                             {cart.map((ele) => {
                                 return (
-                                    <tr key={ele._id} className='text-center border-b-2 pb-5 border-b-gray-300' key={ele._id}>
+                                    <tr key={ele._id} className='text-center border-b-2 pb-5 border-b-gray-300'>
                                         <td className='flex justify-center p-3'><img className='w-15 h-10' src={ele.image} alt="ITEM" /></td>
                                         <td className='p-3'>{ele.title}</td>
                                         <td className='p-3'>{ele.price} $</td>

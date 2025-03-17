@@ -6,11 +6,16 @@ import add from "../assets/add_icon_green.png";
 import remove from "../assets/remove_icon_red.png";
 import { Footer } from '../components/Footer';
 import { Loading } from '../components/Loading';
+import { UserContext } from '../context/userContext';
+import { useNavigate } from 'react-router-dom';
 
 export const Menu = () => {
     const { dish, cart, addToCart, removeFromCart,
             getCartData, fetchData, loading } = useContext(StoreContext);
+    const {isLoggedin} = useContext(UserContext)
 
+    const navigate = useNavigate()
+    
     useEffect(() => {
         fetchData();
         getCartData();
@@ -35,7 +40,7 @@ export const Menu = () => {
                                     <h2 className='font-bold text-blue-950'>{ele.title}</h2>
                                     <div className='flex items-center gap-3'>
                                         <img 
-                                            onClick={() => addToCart(ele._id)} 
+                                            onClick={() => {isLoggedin ? addToCart(ele._id) : navigate("/getStarted")} } 
                                             className='w-6 cursor-pointer' 
                                             src={add} 
                                             alt="add"
