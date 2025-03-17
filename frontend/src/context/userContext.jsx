@@ -1,11 +1,15 @@
+import React from "react";
 import axios from "axios";
 import { createContext, useEffect, useState } from "react";
+import { useNavigate } from 'react-router-dom'
 import { toast } from "react-toastify";
+
 
 export const UserContext = createContext();
 
 export const UserContextProvider = (props) => {
     axios.defaults.withCredentials = true
+    const navigate = useNavigate()
 
     const backendUrl = import.meta.env.VITE_BACKEND_URL; 
     const [isLoggedin, setIsLoggedin] = useState(false);
@@ -18,6 +22,8 @@ export const UserContextProvider = (props) => {
             if(data.Success) {
                 setIsLoggedin(true)
                 getUserData()
+            } else {
+                navigate("/")
             }
         } catch (error) {
             console.log(error.message);
@@ -36,7 +42,8 @@ export const UserContextProvider = (props) => {
         backendUrl,
         isLoggedin, setIsLoggedin,
         userData, setUserData,
-        getUserData
+        getUserData,
+        authState
     };
 
     useEffect(() => {
