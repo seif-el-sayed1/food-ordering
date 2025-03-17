@@ -41,9 +41,7 @@ export const AdminContextProvider = (props) => {
         try {
             const { data } = await axios.get(backendUrl + "food/get-admin-orders");
             if (data.success) {
-                setClientOrder(data.clientOrder)
-                console.log(Z);
-                
+                setClientOrder(data.orders)
             }
         } catch (error) {
             console.log(error.message)
@@ -52,6 +50,18 @@ export const AdminContextProvider = (props) => {
         }
     }
 
+    const updateStatus = async (orderId, userId, newStatus) => {
+        try {
+            const {data} = await axios.post(backendUrl + "food/update-status", {orderId, userId, newStatus})
+            if (data.success) {
+                console.log("DONE");
+            }
+        } catch (error) {
+            console.log(error.message)
+        }
+    }
+        
+
     const value = {
         backendUrl,
         fetchData,
@@ -59,7 +69,8 @@ export const AdminContextProvider = (props) => {
         deleteFood,
         loading,
         clientOrder,
-        getOrders
+        getOrders,
+        updateStatus
     }
         
     return (

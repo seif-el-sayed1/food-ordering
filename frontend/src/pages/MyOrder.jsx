@@ -52,7 +52,13 @@ export const MyOrder = () => {
                             <p className='text-gray-500'>
                                 Total: {ele.order.reduce((acc, curr) => acc + curr.price * curr.count, 0)} $
                             </p>
-                            <p className='text-green-600 font-bold'>{ele.status}</p>
+                            <p className={` font-bold text-lg
+                                        ${ele.status === "Preparing the order" ? "text-orange-400" :
+                                        ele.status === "in Delivery" ? "text-blue-600" :
+                                        ele.status === "Delivered" ? "text-green-600" :
+                                        "text-red-600"}`}>
+                                {ele.status}
+                            </p>
                             <span className='text-sm text-gray-500'>{ele.date}</span>
                         </div>
                     ))
