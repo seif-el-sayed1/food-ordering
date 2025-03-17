@@ -155,6 +155,22 @@ const ordersData = async (req, res) => {
     }
 }
 
+const updateOrder = async (req, res) => {
+    try {
+        const { orderId, userId, newStatus } = req.body;
+
+        const updatedOrder = await orderModel.findOneAndUpdate(
+            { _id: orderId, userId }, 
+            { $set: { status: newStatus } }, 
+            { returnDocument: "after" }
+        );
+        return res.json({ success: true, updatedOrder });
+    } catch (error) {
+        return res.status(500).json({ success: false, message: error.message });
+    }
+};
+
+
 module.exports = {
     addFood,
     deleteFood,
@@ -166,5 +182,6 @@ module.exports = {
     deleteFromCart,
     addOrder,
     getOrder,
-    ordersData
+    ordersData,
+    updateOrder
 }

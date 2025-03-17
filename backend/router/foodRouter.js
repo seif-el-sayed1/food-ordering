@@ -45,6 +45,7 @@ router.route("/delete-from-cart").post(verifyToken, foodController.deleteFromCar
 router.route("/add-order").post(verifyToken, foodController.addOrder)
 router.route("/get-order").get(verifyToken, foodController.getOrder)
 router.route("/get-admin-orders").get(foodController.ordersData)
+router.route("/update-status").post(foodController.updateOrder)
 
 
 module.exports = router
