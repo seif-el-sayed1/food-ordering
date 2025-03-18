@@ -11,7 +11,7 @@ Secure password hashing using bcrypt.
 ## 🎛 Admin Panel
 Manage food items in the menu (Add, Edit, Delete).
 Control order status (Preparing the order, In Delivery, Delivered, Out of Delivery).
-##🛒 User Panel
+## 🛒 User Panel
 View available food items.
 Add items to cart and place orders.
 Track order status in real-time
