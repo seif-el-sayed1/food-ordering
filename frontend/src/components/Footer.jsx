@@ -32,6 +32,10 @@ export const Footer = () => {
             </div>
             <p className='text-center text-gray-500 tracking-wide'>
                 Copyright {new Date().getFullYear()} &copy; food.com - All Right Reserved</p>
+            <p className='text-center text-white' >Made by 
+                <a className='text-yellow-500 font-bold pl-1 hover:text-2xl duration-300 tracking-wide  ' 
+                target='_blank' href="https://www.linkedin.com/in/seif-el-sayed-a8452a31a/">SEIF</a>
+            </p>
         </div>
     )
 }
