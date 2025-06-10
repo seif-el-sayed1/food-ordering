@@ -34,8 +34,8 @@ const register = async (req, res) => {
         })
         await user.save()
         
-        const token = jwt.sign({id: user._id}, process.env.JWT_SECRET_KEY, {expiresIn: '1ms'})
-        res.cookie('token', token, {maxAge:60000, httpOnly:true, secure:true, sameSite:"strict"})
+        const token = jwt.sign({id: user._id}, process.env.JWT_SECRET_KEY, {expiresIn: '10m'})
+        res.cookie('token', token, {maxAge:600000, httpOnly:true, secure:true, sameSite:"strict"})
 
         return res.json({Success: true, message: "Sign Up"})
     } catch(error) {
@@ -58,7 +58,7 @@ const login = async (req, res) => {
             return res.json({Success: false, message: "Wrong Password"})
         }
 
-        const token = jwt.sign({id: user._id}, process.env.JWT_SECRET_KEY, {expiresIn: '1m'})
+        const token = jwt.sign({id: user._id}, process.env.JWT_SECRET_KEY, {expiresIn: '10m'})
         res.cookie('token', token, {maxAge:600000, httpOnly:true, secure:true, sameSite:"strict"})
 
         return res.json({Success: true, message: "Logged In"})
